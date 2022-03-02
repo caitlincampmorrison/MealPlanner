@@ -22,7 +22,6 @@ app.post('/', async(req, res, next) => {
 })
 
 app.put('/:id', async(req,res,next) => {
-    console.log(req.params.id)
     try{
         const item = await GroceryList.findByPk(req.params.id)
         await item.update(req.body)

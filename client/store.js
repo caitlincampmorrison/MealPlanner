@@ -55,7 +55,6 @@ export const addToGroceryList = (item, day, recipe) => {
 }
 
 export const updateGroceryList = (item) => {
-    console.log(item.id, item.item, item.complete )
     return async (dispatch) => {
         item = (await axios.put(`/api/grocerylists/${item.id}`, item)).data
         dispatch(fetchGroceryListFromServer())
@@ -63,7 +62,6 @@ export const updateGroceryList = (item) => {
 }
 
 export const deleteAllGroceryList = () => {
-    console.log("delete")
     return async (dispatch) => {
       const {data} = await axios.delete(`/api/grocerylists`);
       dispatch({ type: DELETE_ALL_GROCERY_LIST, grocerylists: data})
@@ -71,7 +69,6 @@ export const deleteAllGroceryList = () => {
     };
 }
 export const deleteItem = (item) => {
-    console.log("delete: " + item.item)
     return async (dispatch) => {
       const data = await axios.delete(`/api/grocerylists/${item.id}`);
       dispatch({ type: DELETE_ITEM, item: item.id })
@@ -87,7 +84,6 @@ export const createRecipe = ( recipe ) => {
 }
 
 export const deleteRecipe = (recipe) => {
-    console.log("delete recipe: " + recipe.name)
     return async (dispatch) => {
       const data = await axios.delete(`/api/recipes/${recipe.id}`);
       dispatch({ type: DELETE_RECIPE, recipe: recipe.id })
