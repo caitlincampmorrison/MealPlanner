@@ -13,11 +13,11 @@ const Recipe = db.define('recipe', {
         allowNull: false
     },
     ingredients: {
-        type: STRING,
+        type: STRING(1234),
         allowNull: false
     },
     instructions: {
-        type: STRING,
+        type: STRING(1234),
         allowNull: false
     },
     time: {

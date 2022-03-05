@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import loggerMiddleware from "redux-logger";
 import thunk from "redux-thunk";
 import axios from "axios";
+import GroceryList from "./components/GroceryList";
 
 //ACTION TYPES
 const FETCH_RECIPES_FROM_SERVER = "FETCH_RECIPES_FROM_SERVER"
@@ -15,8 +16,19 @@ const DELETE_ITEM = "DELETE_ITEM"
 const UPDATE_GROCERY_LIST = "UPDATE_GROCERY_LIST"
 const CREATE_RECIPE = "CREATE_RECIPE"
 const DELETE_RECIPE = "DELETE_RECIPE"
+const DELETE_RECIPE_FROM_CALENDAR = "DELETE_RECIPE_FROM_CALENDAR"
+const SET_UNIQUE_GROCERY_ITEMS = "SET_UNIQUE_GROCERY_ITEMS"
+const UPDATE_RECIPE_SORT = "UPDATE_RECIPE_SORT"
 
 //ACTION CREATORS
+export const setUniqueGroceryItem = (unique) => ({
+    type: SET_UNIQUE_GROCERY_ITEMS,
+    unique,
+});
+export const updateRecipeSort = (recipe_sort) => ({
+    type: UPDATE_RECIPE_SORT,
+    recipe_sort
+})
 
 //THUNK ACTION CREATORS
 export const fetchRecipesFromServer = () => {
@@ -40,9 +52,9 @@ export const fetchGroceryListFromServer = () => {
     };
 };
 
-export const addToCalendar = (day, recipe) => {
+export const addToCalendar = (day, recipe, name) => {
     return async(dispatch) => {
-        const { data } = await axios.post('/api/calendars/add', {day, recipe})
+        const { data } = await axios.post('/api/calendars/add', {day, recipe, name})
         dispatch({ type: ADD_TO_CALENDAR, calendars: data })
     }
 }
@@ -68,15 +80,20 @@ export const deleteAllGroceryList = () => {
       dispatch(fetchGroceryListFromServer())
     };
 }
-export const deleteItem = (item) => {
+export const deleteItem = (name, grocerylists) => {
+    const find = grocerylists.filter(i => i.item === name)
+    const item_id = find[0].id
     return async (dispatch) => {
-      const data = await axios.delete(`/api/grocerylists/${item.id}`);
-      dispatch({ type: DELETE_ITEM, item: item.id })
-      dispatch(fetchGroceryListFromServer())
+      let data
+      {find.forEach((i) => (data = axios.delete(`/api/grocerylists/${i.id}`)))
+            dispatch({ type: DELETE_ITEM, item: item_id })
+            dispatch(fetchGroceryListFromServer())
+       }
     };
 }
 
 export const createRecipe = ( recipe ) => {
+    console.log(recipe)
     return async (dispatch) => {
         const { data } = await axios.post('/api/recipes', recipe )
         dispatch(fetchRecipesFromServer())
@@ -90,13 +107,24 @@ export const deleteRecipe = (recipe) => {
       dispatch(fetchRecipesFromServer())
     };
 }
-
+export const deleteRecipeFromCalendar = (calendar) => {
+    return async (dispatch) => {
+      const data = await axios.delete(`/api/calendars/${calendar.id}`);
+      dispatch({ type: DELETE_RECIPE_FROM_CALENDAR, calendar: calendar.id })
+      dispatch(fetchGroceryListFromServer())
+      dispatch(fetchRecipesFromServer())
+      dispatch(fetchCalendarFromServer)
+    };
+}
 
 //INITIAL STATE
 const initialState = {
     recipes: [],
     calendars: [],
-    grocerylists: []
+    grocerylists: [],
+    unique: [],
+    movedarray: [],
+    recipe_sort: {recipe_sort: "Name"}
 };
 
 //REDUCER
@@ -122,6 +150,12 @@ const reducer = ( state = initialState, action) => {
             return { ...state, grocerylists: action.grocerylists}
         case DELETE_ITEM:
             return { ...state, grocerylists: state.grocerylists.filter((item)=>item.id !== action.item)}
+        case DELETE_RECIPE_FROM_CALENDAR:
+            return {...state, calendars: state.calendars.filter((calendar)=>calendar.id !== action.item)}
+        case SET_UNIQUE_GROCERY_ITEMS:
+            return {...state, movedarray: action.unique}    
+        case UPDATE_RECIPE_SORT:
+            return { ...state, recipe_sort: action.recipe_sort}
         default: 
             return state
     }

@@ -7,6 +7,10 @@ const Calendar = db.define('calendar', {
         type: UUID,
         allowNull: false
     },
+    recipeName: {
+        type: STRING,
+        allowNull: false
+    },
     dayId: {
         type: STRING,
         allowNull: false

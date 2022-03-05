@@ -8,6 +8,7 @@ import SingleRecipe from './SingleRecipe';
 import Calendar from "./Calendar"
 import AddRecipe from './AddRecipe';
 import GroceryList from './GroceryList'
+import Home from "./Home"
 
 class Main extends React.Component {
   componentDidMount(){
@@ -23,7 +24,7 @@ class Main extends React.Component {
           <Nav />
           <div className = "content">
             <Switch>
-              <Route exact path= "/" component={RecipeList} />
+              <Route exact path= "/" component={Home} />
               <Route exact path="/recipes" component={RecipeList} />
               <Route exact path="/recipes/:id" component={SingleRecipe} />
               <Route exact path="/calendars" component={Calendar} />

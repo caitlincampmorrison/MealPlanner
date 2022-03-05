@@ -9,6 +9,18 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button"
 import { deleteRecipe } from "../store"
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+const theme = createTheme({
+      palette: {
+        primary: {
+          light: "#fafbfe",
+          main: "#edf2fb",
+        },
+        secondary: {
+          main: "#000000",
+        },
+      },
+});
 
 class SingleRecipe extends React.Component{
     render(){
@@ -22,28 +34,26 @@ class SingleRecipe extends React.Component{
       let instr = []
       strinst ? instr = strinst.split('/') : []
       return (
+        <ThemeProvider theme={theme}>
         <div>
-          <Grid container>
-            <Grid item item xs={12} sm={12} md={12} sx={{minHeight:"30vh"}}>
-                <Card className="main_page_top">
+          <Grid container display="column" alignItems="center" justifyContent="center" sx={{marginTop:5}}>
+            <Grid item item xs={12} sm={12} md={10}>
+                <Card>
                   <CardMedia
+                    component="img"
                     className="recipe-image"
-                    sx={{ height: 300 }}
+                    sx={{ height: 200 }}
                     image={recipe.picture}
-                  >
-                    <CardContent>
-                      <Typography component="h1">{recipe.name}</Typography>
-                    </CardContent>
-                  </CardMedia>
+                  />
               </Card>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item item xs={12} sm={12} md={12} sx={{minHeight:"30vh"}}>
+          <Grid container sx={{marginLeft:17}}>
+            <Grid item item xs={12} sm={12} md={12} >
               <h1>{recipe.name}</h1>
             </Grid>
           </Grid>
-          <Grid container spacing = {2}>
+          <Grid container sx={{marginLeft:14.5}} spacing={2}>
             <Grid item>
               <p>Time: {recipe.time}</p>
             </Grid>
@@ -60,25 +70,25 @@ class SingleRecipe extends React.Component{
               <p>Rating: {recipe.rating}/5</p>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item item xs={12} sm={12} md={12} sx={{minHeight:"30vh"}}>
+          <Grid container direction="row" sx={{marginLeft:17}}>
+            <Grid item item xs={12} sm={12} md={4} sx={{minHeight:"30vh"}}>
+              <p>Ingredients</p>
               {ingr.map((ingredient, i) => (
-                  <p key={i}>{i+1}. {ingredient}</p>
+                  <p key={i}>{ingredient}</p>
               ))}
             </Grid>
-          </Grid>
-          <Grid container>
-            <Grid item item xs={12} sm={12} md={12} sx={{minHeight:"30vh"}}>
+            <Grid item item xs={12} sm={12} md={4} sx={{minHeight:"30vh"}}>
+              <p>Instructions:</p>
               {instr.map((instruction, i) => (
                   <p key={i}>{i+1}. {instruction}</p>
               ))}
             </Grid>
           </Grid>
-          {recipe.name}
           <Link to={`/recipes`}>
-            <Button onClick={ () => this.props.deleteRecipe(recipe)}>Delete</Button>
+            <Button sx={{marginLeft:17}} color="secondary" variant="outlined" onClick={ () => this.props.deleteRecipe(recipe)}>Delete</Button>
           </Link>
         </div>
+        </ThemeProvider>
        )  
     }
     

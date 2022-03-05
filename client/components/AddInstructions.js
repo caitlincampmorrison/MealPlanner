@@ -1,5 +1,8 @@
 import React from "react"
 import {connect} from "react-redux"
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
 
 class AddInstructions extends React.Component {
     constructor(props) {
@@ -10,8 +13,8 @@ class AddInstructions extends React.Component {
     createUI(){
        return this.state.values.map((el, i) => 
            <div key={i}>
-              <input type="text" name="instruction" value={el||''} onChange={this.handleChange.bind(this, i)} />
-              <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>
+              {i+1}. <TextField fullWidth variant="standard" size="small" type="text" name="instruction" value={el} onChange={this.handleChange.bind(this, i)} sx={{marginBottom:2}} />
+             
            </div>          
        )
     }
@@ -38,10 +41,13 @@ class AddInstructions extends React.Component {
       return (
         <form>
             {this.createUI()}        
-            <input type='button' value='add more' onClick={this.addClick.bind(this)}/>
+            <AddIcon type='button' value='add' onClick={this.addClick.bind(this)}/>
         </form>
       );
     }
   }
 
   export default connect(null, null)(AddInstructions)
+
+
+ //<RemoveIcon type='button' value='remove' onClick={this.removeClick.bind(this, i)} />

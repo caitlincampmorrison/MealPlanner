@@ -11,7 +11,7 @@ const Nav = () => {
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color="common" sx={{ height: "60px" }}>
-            <Box sx={{ display: { xs: "none", sm: "none", md: "flex" } }}> 
+            <Box sx={{ display: { xs: "flex", sm: "flex", md: "flex" } }}> 
               <Link  to={`/recipes`}>
                 <Typography
                       variant="p"

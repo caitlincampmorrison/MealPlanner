@@ -24,15 +24,15 @@ app.get("/:id", async (req, res, next) => {
 
 app.post('/', async(req,res,next) => {
   try{
-      const data = await Recipe.create({name: 
-        req.body.recipe_name, 
+      const data = await Recipe.create({
+        name: req.body.recipe_name, 
         ingredients: req.body.ingredients, 
         instructions: req.body.instructions,
         time: req.body.time,
         servings: req.body.servings,
         cuisine: req.body.cusine,
-        link: req.body.link,
-        picture: req.body.link,
+        link: req.body.website_link,
+        picture: req.body.picture,
         rating: req.body.rating
       })
       res.send(data)
