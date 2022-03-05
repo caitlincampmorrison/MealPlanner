@@ -14,8 +14,7 @@ import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 
 const gapi = window.gapi
-const CLIENT_ID = "999517115872-k3faik9n6p9aciukm9q79uqf0a4ojbc5.apps.googleusercontent.com"
-const API_KEY = "AIzaSyAXUaC2oMc4h-z9SSVsQUaVQ_bfWb74y2A"
+
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"]
 const SCOPES = "https://www.googleapis.com/auth/calendar"
 
