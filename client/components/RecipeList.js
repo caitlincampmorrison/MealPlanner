@@ -61,7 +61,12 @@ const RecipeList = ( { recipes, recipe_sort })  => {
   return (  
     <ThemeProvider theme={theme}>    
         <div id="recipes">
-          <Grid container direction="row" justifyContent="flex-end" sx={{marginTop:5}}>
+        <Grid container direction="row" justifyContent="center" sx={{marginTop:5}}>
+              <Grid item>
+                <h1>My Recipes</h1>
+              </Grid>
+          </Grid>
+          <Grid container direction="row" justifyContent="flex-end" sx={{marginTop:2}}>
               <Grid item>
                 <RecipeSort/>
               </Grid>

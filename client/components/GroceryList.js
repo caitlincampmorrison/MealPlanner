@@ -15,25 +15,32 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { letterSpacing } from "@mui/system";
 
 const GroceryList = ( { grocerylists, deleteItem, deleteAllGroceryList, addToGroceryList })  => { 
     //only prints grocery items once 
     let unique = []
-    const item_names = grocerylists.map(i => i.item)
+    let item_names = []
+    console.log(grocerylists)
+    /*
+    if(grocerylists){
+        item_names = grocerylists.map(i => i.item)
+    }
     item_names.forEach(i => {
         if(!unique.includes(i)){
             unique.push(i)
         }
     })
     console.log(unique)
+    */
     /*const [groceryitems, updategroceryitems] = useState(unique);
       console.log(groceryitems)*/
     function handleOnDragEnd(result){
-        const items = Array.from(unique)
+        const items = Array.from(grocerylists)
         const [reordereditem] = items.splice(result.source.index, 1)
         items.splice(result.destination.index, 0, reordereditem)
-        unique = Array.from(items)
-        setUniqueGroceryItem(unique)
+        grocerylists = Array.from(items)
+        setUniqueGroceryItem(grocerylists)
     }
     const theme = createTheme({
         palette: {
@@ -60,20 +67,20 @@ const GroceryList = ( { grocerylists, deleteItem, deleteAllGroceryList, addToGro
             <Grid container alignItems="center" direction="column" justifyContent="center">
                 <Grid item><h1>Grocery List</h1> </Grid>
                 <Grid item xs={12} sm={12} md={8} >
-                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                     <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="recipes">
                     {(provided) => (
                     grocerylists ?
                     <Grid container direction="column" alignItems="center"  {...provided.droppableProps} ref={provided.innerRef}>
-                        {unique.map((ing, i) => {
+                        {grocerylists.map((ing, i) => {
                             return(
-                                <Draggable key={i} draggableId={ing} index={i}>
+                                <Draggable key={i} draggableId={ing.item} index={i}>
                                 {(provided) => (
                                 <Grid item key={i}>
                                 <Grid container  direction="row" alignItems="center" 
                                     {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} sx={{height:50}}
                                 >
-                                    <Grid item>{ing}</Grid>
+                                    <Grid item>{ing.item}</Grid>
                                     <Grid item><Button color="secondary" onClick={()=>deleteItem(ing, grocerylists)}>x</Button></Grid>
                                 </Grid>  
                                 </Grid>    

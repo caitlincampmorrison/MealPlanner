@@ -7,9 +7,13 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+
 import Button from "@mui/material/Button"
 import { deleteRecipe } from "../store"
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ExternalLink } from 'react-external-link';
+
 const theme = createTheme({
       palette: {
         primary: {
@@ -36,43 +40,37 @@ class SingleRecipe extends React.Component{
       return (
         <ThemeProvider theme={theme}>
         <div>
-          <Grid container display="column" alignItems="center" justifyContent="center" sx={{marginTop:5}}>
-            <Grid item item xs={12} sm={12} md={10}>
+          
+          <Grid container display="row" sx={{paddingLeft: 4, paddingTop:3}}>
+          <Grid item item xs={12} sm={12} md={2}>
                 <Card>
                   <CardMedia
                     component="img"
                     className="recipe-image"
-                    sx={{ height: 200 }}
+                    sx={{ height: 250 }}
                     image={recipe.picture}
                   />
               </Card>
             </Grid>
-          </Grid>
-          <Grid container sx={{marginLeft:17}}>
-            <Grid item item xs={12} sm={12} md={12} >
-              <h1>{recipe.name}</h1>
+            <Grid item xs={12} sm={12} md={5} >
+              <Grid container display="column" alignItems="center" sx={{paddingLeft: 3}}>
+                <Grid item>
+                  <Box>
+                  <h1>{recipe.name}</h1>
+                  <p>Time: {recipe.time}</p>
+                  <p>Servings: {recipe.servings}</p>
+                  <p>Cuisine: {recipe.cuisine}</p>
+                  <p>Link: <ExternalLink href={recipe.link} color="secondary">
+                      {recipe.link}</ExternalLink></p>
+                  <p>Rating: {recipe.rating}/5</p>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container sx={{marginLeft:14.5}} spacing={2}>
-            <Grid item>
-              <p>Time: {recipe.time}</p>
-            </Grid>
-            <Grid item>
-              <p>Servings: {recipe.servings}</p>
-            </Grid>
-            <Grid item>
-              <p>Cuisine: {recipe.cuisine}</p>
-            </Grid>
-            <Grid item>
-              <p>Link: {recipe.link}</p>
-            </Grid>
-            <Grid item>
-              <p>Rating: {recipe.rating}/5</p>
-            </Grid>
-          </Grid>
-          <Grid container direction="row" sx={{marginLeft:17}}>
+          <Grid container direction="row" sx={{paddingLeft: 4, paddingTop: 2}}>
             <Grid item item xs={12} sm={12} md={4} sx={{minHeight:"30vh"}}>
-              <p>Ingredients</p>
+              <p>Ingredients:</p>
               {ingr.map((ingredient, i) => (
                   <p key={i}>{ingredient}</p>
               ))}
@@ -84,9 +82,13 @@ class SingleRecipe extends React.Component{
               ))}
             </Grid>
           </Grid>
-          <Link to={`/recipes`}>
-            <Button sx={{marginLeft:17}} color="secondary" variant="outlined" onClick={ () => this.props.deleteRecipe(recipe)}>Delete</Button>
-          </Link>
+          <Grid container>
+            <Grid item sx={{paddingLeft: 4, paddingTop:2}}>
+            <Link to={`/recipes`} >
+              <Button color="secondary" variant="outlined" onClick={ () => this.props.deleteRecipe(recipe)}>Delete</Button>
+            </Link>            
+            </Grid>
+          </Grid>
         </div>
         </ThemeProvider>
        )  

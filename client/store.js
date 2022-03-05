@@ -81,7 +81,10 @@ export const deleteAllGroceryList = () => {
     };
 }
 export const deleteItem = (name, grocerylists) => {
-    const find = grocerylists.filter(i => i.item === name)
+    console.log(name)
+    console.log(grocerylists)
+    const find = grocerylists.filter(i => i.item === name.item)
+    console.log(find)
     const item_id = find[0].id
     return async (dispatch) => {
       let data
@@ -113,7 +116,7 @@ export const deleteRecipeFromCalendar = (calendar) => {
       dispatch({ type: DELETE_RECIPE_FROM_CALENDAR, calendar: calendar.id })
       dispatch(fetchGroceryListFromServer())
       dispatch(fetchRecipesFromServer())
-      dispatch(fetchCalendarFromServer)
+      dispatch(fetchCalendarFromServer())
     };
 }
 

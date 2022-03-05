@@ -58,6 +58,7 @@ class AddRecipe extends React.Component {
         ev.preventDefault()
         const recipe = {}
         this.props.createRecipe({...this.state})
+        this.props.history.push('/recipes')
     }
     
     render() {
@@ -147,11 +148,9 @@ class AddRecipe extends React.Component {
                     <AddInstructions  parentCallback = {this.handleInstCallback} fullWidth/>
                 </Grid>
                 <Grid item>
-                    <Link to={`/recipes`}>
                     <Button color="secondary" variant="outlined" sx={{marginTop: 2}}onClick={handleSubmit}>
                         Add
                     </Button>
-                    </Link>
                 </Grid>
             </Grid>
             </Grid>

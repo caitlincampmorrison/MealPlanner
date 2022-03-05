@@ -11,7 +11,7 @@ import WeeklyRecipes from "./WeeklyRecipes";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-
+import Divider from "@mui/material/Divider";
 
 const gapi = window.gapi
 const CLIENT_ID = "999517115872-k3faik9n6p9aciukm9q79uqf0a4ojbc5.apps.googleusercontent.com"
@@ -122,7 +122,7 @@ class Calendar extends React.Component{
              <CardContent>
             <Grid container direction="column" spacing={3}> 
                 {week.map((date, i)=>(
-                    <Grid item key={i} >
+                    <Grid item key={i} xs={12} sm={12} md={4}>
                         <b className="day_title">{dayofWeek[i]}: {date}</b>
                         <form onSubmit={handleSubmit} data-date={date} style={{paddingTop: 20}}>
                             <div className="custom-select">
@@ -137,6 +137,7 @@ class Calendar extends React.Component{
                             </div>
                         </form>
                         <WeeklyRecipes day={date}/>
+                        <Divider sx={{marginTop:3}}/>
                     </Grid>
                  ))}
             </Grid>
